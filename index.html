@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Công Nghệ Phần Mềm</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" id="loginForm">
+        <h2>Đăng Nhập</h2>
+        <input type="text" id="username" placeholder="Tên đăng nhập">
+        <input type="password" id="password" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+        <p id="error-message"></p>
+    </div>
+
+    <div class="container" id="profilePage" style="display: none;">
+        <h2>Thông Tin Cá Nhân</h2>
+        <img src="https://i.imgur.com/4AiXzf8.jpeg" alt="Ảnh minh họa" width="100">
+        <p><strong>Tên:</strong> Nguyễn Khánh Huỳnh</p>
+        <p><strong>Tuổi:</strong> 25</p>
+        <button onclick="logout()">Đăng Xuất</button>
+    </div>
+
+    <script>
+        function login() {
+            const fixedUsername = "admin";
+            const fixedPassword = "123456";
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === fixedUsername && password === fixedPassword) {
+                localStorage.setItem("isLoggedIn", "true");
+                showProfile();
+            } else {
+                document.getElementById("error-message").textContent = "Sai tài khoản hoặc mật khẩu!";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            showLoginForm();
+        }
+
+        function showProfile() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("profilePage").style.display = "block";
+        }
+
+        function showLoginForm() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("profilePage").style.display = "none";
+        }
+
+        // Kiểm tra nếu đã đăng nhập trước đó
+        window.onload = function () {
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                showProfile();
+            } else {
+                showLoginForm();
+            }
+        };
+    </script>
+</body>
+</html>
